@@ -2,8 +2,8 @@ package lv2.kakao;
 
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Locale;
-
+//카카오 캐시
+//디큐 에 대해 이해 및 lru 알고리즘 이해
 public class Cache {
   public static class Soltuion {
     public static int CACHE_MISS = 5;
