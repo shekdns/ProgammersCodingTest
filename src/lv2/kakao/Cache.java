@@ -4,6 +4,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 //카카오 캐시
 //디큐 에 대해 이해 및 lru 알고리즘 이해
+//깃헙 변경 테스트
 public class Cache {
   public static class Soltuion {
     public static int CACHE_MISS = 5;
