@@ -14,27 +14,37 @@ public class GwalHoChange {
 
       for( int i = 0; i < s_length; i++ ) {
         s = shift( s );
+        System.out.println( "SSSSSS = " + s );
         Stack<Character> stack = new Stack<>();
         boolean flag = true;
-        for( int j = 0; j < s.length(); j++ ) {
-          Character ch = s.charAt( j );
-          if( String.valueOf(ch).equals("(") || String.valueOf(ch).equals("[") || String.valueOf(ch).equals("{") ) {
-            stack.push( ch );
-          } else {
-            if( !stack.isEmpty() ) {
-              Character c = stack.pop();
-              if( c == '(' && ch == ')' ) {
-                continue;
-              } else if ( c == '{' && ch == '}' ) {
-                continue;
-              } else if( c == '[' && ch == ']' ) {
+        if( s.length() % 2 == 0 ) {
+          for (int j = 0; j < s.length(); j++) {
+            Character ch = s.charAt(j);
+            if (String.valueOf(ch).equals("(") || String.valueOf(ch).equals("[") || String.valueOf(ch).equals("{")) {
+              stack.push(ch);
+            } else {
+              if (!stack.isEmpty()) {
+                Character c = stack.pop();
+                System.out.println("C = " + c);
+                System.out.println("CH = " + ch);
+                if (c == '(' && ch == ')') {
+                  continue;
+                } else if (c == '{' && ch == '}') {
+                  continue;
+                } else if (c == '[' && ch == ']') {
+                  continue;
+                } else {
+                  flag = false;
+                  continue;
+                }
+              } else {
+                flag = false;
                 continue;
               }
-            } else {
-              flag = false;
-              continue;
             }
           }
+        } else {
+          flag = false;
         }
         if( flag == true ) {
           answer++;
@@ -49,8 +59,12 @@ public class GwalHoChange {
     Solution solution = new Solution();
     String s = "[](){}";
     String ss = "}]()[{";
+    String sss = "[)(]";
+    String s131 = "()(";
+    String s132 = "(";
+    String s133 = "{{{{{{";
 
-    int reuslt = solution.solution( s );
+    int reuslt = solution.solution( s133 );
 
     System.out.println( "RESULT = " + reuslt );
 
