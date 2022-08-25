@@ -6,7 +6,7 @@ import java.util.Stack;
 public class FunctionDevelopment {
   public static class Solution {
     public int[] solution( int[] progresses, int[] speeds ) {
-      int[] answer = {};
+      int[] answer;
       int batch = 100;
 
       ArrayList<Integer> arraylist = new ArrayList<>();
@@ -22,11 +22,53 @@ public class FunctionDevelopment {
         arraylist.add( mok );
       }
       System.out.println( arraylist );
-      int value = 0;
+      int value = 1;
       ArrayList<Integer> tempList = new ArrayList<>();
-      stack.push(arraylist.get(0) );
+      //stack.push(arraylist.get(0) );
+      int count  = 0;
+      int length = arraylist.size() - 1;
+
+      //7 3 9
       for( int array : arraylist ) {
-        if( )
+        if( count == 0 ) {
+          stack.push( array );
+          count++;
+          continue;
+        }
+
+        int temp = stack.peek();
+        System.out.println( temp );
+        if( count == length ) {
+          if( temp < array ) { // 7 9
+            System.out.println( "TEMP = " + temp + " ARRAY = " + array + " VALUE = " + value );
+            tempList.add( value );
+            tempList.add( 1 );
+          } else {
+            value++;
+            tempList.add( value );
+          }
+        } else {
+          if (!stack.isEmpty()) {
+            if( temp < array ) { // 7 < 3
+              tempList.add( value );
+              stack.push( array );
+              value = 1;
+            } else {  //  7 > 3
+              value++;
+            }
+          }
+        }
+        count++;
+      }
+
+      answer = new int[tempList.size()];
+      int j = 0;
+      for( int i : tempList ) {
+        answer[j++] = i;
+      }
+
+      //for( int array : arraylist ) {
+
 //        if( count == 0 ) {
 //          stack.push( array );
 //          value++;
@@ -46,20 +88,17 @@ public class FunctionDevelopment {
 //            }
 //          }
 //        }
-      }
-
-      System.out.println( tempList );
-
+      //}
       return answer;
     }
   }
 
   public static void main(String[] args) {
     Solution solution = new Solution();
-    int[] progresses = { 93, 30, 55 };
-    //int[] progresses = { 95, 90, 99, 99, 80, 99 };
-    int[] speeds     = { 1, 30, 5 };
-    //int[] speeds     = { 1, 1, 1, 1, 1, 1 };
+    //int[] progresses = { 93, 30, 55 };
+    int[] progresses = { 95, 90, 99, 99, 80, 99 };
+    //int[] speeds     = { 1, 30, 5 };
+    int[] speeds     = { 1, 1, 1, 1, 1, 1 };
 
     int[] result = solution.solution( progresses, speeds );
 
