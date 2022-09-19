@@ -3,7 +3,6 @@ package lv2.kakao;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.Locale;
 
 public class FileSort {
   public static class Solution {
@@ -12,47 +11,42 @@ public class FileSort {
       String[] header = {};
       String[] number = {};
 
-      LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
-      LinkedList<String> headerList = new LinkedList<>();
-      LinkedList<String> numberList = new LinkedList<>();
-      LinkedList<String> tempList   = new LinkedList<>();
-
-      for( int i = 0; i < files.length; i++ ) {
-        map.put( i + 1, files[i] );
-      }
-
-      System.out.println( "MAP = " + map );
-
       //1. 헤더 검사 2. 숫자 검사
       for( int i = 0; i < files.length; i++ ) {
-        String temp = files[i].toLowerCase();
+        header = files[i].split( "\\d+" );  // 문자만 추출
+        //number = files[i].split( "\\D+" );  // 숫자만 추출
 
-        Integer numberInteger = 0;
-
-        header = temp.split( "\\d+" );  // 문자만 추출
-        number = temp.split( "\\D+" );  // 숫자만 추출
-
-        //if( !number[1].equals( "" ) ) {
-        // numberInteger = Integer.parseInt( String.valueOf( number[1] ) );
-        //}
-        //String[] header = files[i].split( "\\.|-|' '" );
-        System.out.println( "Header = " + header[0] + " Number = " + number[1] );
-
-        tempList.add( header[0] + number[1] );
-
-        if( i == files.length - 1 ) {
-          Collections.sort( tempList );
+        Character h = header[0].toLowerCase().charAt(0);
+        for( int j = i + 1; j < files.length; j++ ) {
+          String[] jHeader = files[j].split( "\\d+" );
+          Character jh = jHeader[0].toLowerCase().charAt(0);
+          if( h.compareTo( jh ) > 0 ) {
+            String temp = files[i];
+            files[i] = files[j];
+            files[j] = temp;
+          }
         }
       }
 
-      System.out.println( "TEMP LSIT = " + tempList );
+      for( int i = 0; i < files.length; i++ ) {
+        header = files[i].split( "\\d+" );  // 문자만 추출
+        Character h = header[0].toLowerCase().charAt(0);
+        for( int k = i + 1; k < files.length; k++ ) {
+          number = files[i].split( "\\D+" );  // 숫자만 추출
+          String[] jHeader = files[k].split( "\\d+" );
+          String[] kNumber = files[k].split( "\\D+" );
+          Character jh = jHeader[0].toLowerCase().charAt(0);
+          if( h.compareTo( jh ) == 0 ) {
+            if( Integer.parseInt( String.valueOf( number[1] ) ) > Integer.parseInt( String.valueOf( kNumber[1]) ) ) {
+              String temp = files[i];
+              files[i] = files[k];
+              files[k] = temp;
+            }
+          }
+        }
+      }
 
-      //5 50 10 14 ->  10 50 5 14
-//      for( int i = 1; i < files.length; i++ ) {
-//        if( headerList.get(i).equals( headerList.get(i-1) ) ) {
-//
-//        }
-//      }
+      answer = files;
 
       return answer;
     }
@@ -86,10 +80,10 @@ public class FileSort {
 
      */
 
-    String[] result = solution.solution( files1 );
+    String[] result = solution.solution( files4 );
 
     for( String s : result ) {
-      System.out.println( s + " " );
+      System.out.print( s + " " );
     }
   }
 }
