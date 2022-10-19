@@ -1,5 +1,5 @@
 package lv2;
-
+//제이든 케이스
 public class JadenCase {
   public static class Solution {
     public String solution( String s ) {
