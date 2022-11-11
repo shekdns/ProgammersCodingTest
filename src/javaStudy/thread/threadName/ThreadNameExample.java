@@ -12,5 +12,7 @@ public class ThreadNameExample {
     ThreadB threadB = new ThreadB();  // B 객체 생성
     System.out.println( "작업 스레드 이름 : " + threadB.getName() );
     threadB.start();
+
+    System.out.println( 4 / 2 );
   }
 }
