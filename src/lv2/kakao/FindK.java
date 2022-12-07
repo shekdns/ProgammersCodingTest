@@ -32,15 +32,28 @@ public class FindK {
         if( split[i].equals( "1" ) || split[i].equals( "" ) ) {
           continue;
         }
-        if( split[i].equals( "2" ) ) {
+        if( split[i].equals( "2" ) || split[i].equals( "3" ) ) {
           answer++;
           continue;
         }
-        if( Integer.parseInt( split[i] ) % 2 == 0 ) {
-          continue;
-        } else {
+        boolean flag = true;
+        System.out.println( "MATH1 = " + (long)Math.sqrt( Long.parseLong( split[i] ) ) );
+        System.out.println( "MATH2 = " + (long)Math.sqrt( Long.parseLong( split[i] ) ) + 1 );
+        for( int j = 3; j < (long)Math.sqrt( Long.parseLong( split[i] ) ) + 1; j++  ) {
+          if( Long.parseLong( split[i] ) % j == 0 ) {
+            flag = false;
+            break;
+          }
+        }
+
+        if( flag == true ) {
           answer++;
         }
+//        if( Long.parseLong( split[i] ) % 2 == 0 ) {
+//          continue;
+//        } else {
+//          answer++;
+//        }
       }
 
       return answer;
@@ -55,7 +68,6 @@ public class FindK {
     int k2 = 10;
 
     int result = solution.solution( n2, k2 );
-
     System.out.println( "RESULT = " + result );
   }
 }
