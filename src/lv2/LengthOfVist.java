@@ -1,12 +1,14 @@
 package lv2;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 //Sumer Winder Coing 방문길이
 public class LengthOfVist {
   public static class Solution {
     public int solution( String dirs ) {
-      HashSet<String> hashSet = new HashSet<>();
+      LinkedHashSet<String> hashSetGo   = new LinkedHashSet<>();
+      LinkedHashSet<String> hashSetBack = new LinkedHashSet<>();
       /*
          1. 스타팅 은 (0,0) 에서 시작
          2. 중복되는 길은 X
@@ -18,7 +20,7 @@ public class LengthOfVist {
          x 가 5 또는 -5
        */
       int[][] array = { { 0, 0 } };
-
+      int c = 0;
       for( int i = 0; i < dirs.length(); i++ ) {
         Character ch = dirs.charAt( i );
         int x = array[0][0];
@@ -50,13 +52,17 @@ public class LengthOfVist {
           }
           array[0][0] = x;
         }
-        System.out.println( temp + "->" + x + "," + y );
-        hashSet.add( temp + "->" + x + "," + y );
+
+        hashSetGo.add( temp + " " + x + "," + y );
+        hashSetBack.add( x + "," + y + " " + temp );
+        System.out.println( " GO = " + hashSetGo );
+        System.out.println( " BA = " + hashSetBack );
+        hashSetGo.addAll( hashSetBack );
       }
 
-      //System.out.println( hashSet );
+      System.out.println( hashSetGo );
 
-      return hashSet.size();
+      return hashSetGo.size() / 2;
     }
   }
 
@@ -64,8 +70,10 @@ public class LengthOfVist {
     Solution solution = new Solution();
     String dirs1 = "ULURRDLLU";
     String dirs2 = "LULLLLLLU";
+    String dirs3 = "UUUUDDDD";
+    String dirs4 = "LRLRLR";
 
-    int reuslt = solution.solution( dirs1 );
+    int reuslt = solution.solution( dirs3 );
     System.out.println( "REUSLT = " + reuslt );
   }
 }
