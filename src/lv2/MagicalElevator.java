@@ -25,26 +25,19 @@ public class MagicalElevator {
         storey = storey / 10;
       }
 
-      int sum = 1;
-      for( int i = 0; i < temp.length() -1; i++ ) {
-        sum *= 10;
-      }
-      int tSum = sum *= ( arrayList.get( temp.length() - 1 ) + 1 );
-      String last = String.valueOf( String.valueOf( tSum ).charAt( 0 ) );
-
       int count = 0;
-      for( int i = 0; i < arrayList.size() - 1; i++ ) {
+      for( int i = 0; i < arrayList.size(); i++ ) {
         if( arrayList.get( i ) < 5 ) {
-          answer += arrayList.get( i );
+          answer += arrayList.get( i ) + count;
+          System.out.println( answer );
           count = 0;
           continue;
         }
         int t = 10 - arrayList.get( i ) - count;
         answer += t;
+        System.out.println( answer );
         count = 1;
       }
-
-      answer += Integer.valueOf( last );
 
       return answer;
     }
@@ -55,8 +48,11 @@ public class MagicalElevator {
     int storey1 = 16;
     int storey2 = 2554;
     int storey3 = 4;
+    int storey4 = 95;
+    int storey5 = 11;
+    int storey6 = 555;
 
-    int result = solution.solution( storey2 );
+    int result = solution.solution( storey6 );
     System.out.println( "RESULT = " + result );
   }
 }
