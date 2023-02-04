@@ -54,9 +54,9 @@ public class PersonalInformationPeriod {
           accessDay = returnAccesDay( array, access );
         };
         System.out.println( "AA = " + accessDay );
-//        if( Integer.parseInt( today.replace( ".", "" ) ) > Integer.parseInt( accessDay.replace( ".", "" ) ) ) {
-//          arrayList.add( i + 1 );
-//        }
+        if( Integer.parseInt( today.replace( ".", "" ) ) > Integer.parseInt( accessDay.replace( ".", "" ) ) ) {
+          arrayList.add( i + 1 );
+        }
       }
 
       int[] answer = arrayList.stream().mapToInt( Integer::intValue ).toArray();
@@ -77,8 +77,8 @@ public class PersonalInformationPeriod {
 
     int[] result = solution.solution( today1, terms1, privacies1 );
 
-//    for( int i : result ) {
-//      System.out.print( i + " " );
-//    }
+    for( int i : result ) {
+      System.out.print( i + " " );
+    }
   }
 }
