@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class PersonalInformationPeriod {
 
   private static class Solution {
-    // 모두 -1일식 해야됨 그래서 1월 1일자의 경우 month도 - 해야됨
+    // 모두 -1일식 해야됨 그래서 1월 1일자의 경우 month도 - 해야됨  2021.01.01 -> 2021.12.28, 2021.12.28 -> 2022.11.27
     public static String returnAccesDay( String[] array, int access ) {
       int year  = Integer.parseInt( array[0] );
       int month = Integer.parseInt( array[1] );
@@ -22,6 +22,10 @@ public class PersonalInformationPeriod {
       int d = month + access;
       int mok = d / 12;
       int na  = d % 12;
+      if( mok != 0 && na == 0 ) {
+        mok = mok - 1;
+        na  = 12;
+      }
 
       String rY = String.valueOf( ( year + mok ) );
       String rM = ( na > 9 ) ? String.valueOf( na ) : "0" + na;
@@ -43,10 +47,10 @@ public class PersonalInformationPeriod {
         String[] array = split[0].split( "[.]" );
         int access = map.get( split[1] );
         String accessDay = returnAccesDay( array, access );
-
-        if( Integer.parseInt( today.replace( ".", "" ) ) > Integer.parseInt( accessDay.replace( ".", "" ) ) ) {
-          arrayList.add( i + 1 );
-        }
+        System.out.println( "AA = " + accessDay );
+//        if( Integer.parseInt( today.replace( ".", "" ) ) > Integer.parseInt( accessDay.replace( ".", "" ) ) ) {
+//          arrayList.add( i + 1 );
+//        }
       }
 
       int[] answer = arrayList.stream().mapToInt( Integer::intValue ).toArray();
@@ -59,16 +63,16 @@ public class PersonalInformationPeriod {
     Solution solution = new Solution();
     String today1 = "2022.05.19";
     String[] terms1 = { "A 6", "B 12", "C 3" };
-    String[] privacies1 = { "2021.05.02 A", "2021.07.01 B", "2022.02.19 C", "2022.02.20 C" };
+    String[] privacies1 = { "2021.05.02 A", "2021.07.01 B", "2022.02.19 C", "2022.02.20 C", "2021.01.01 B", "2021.12.28 B" };
 
     String today2 = "2020.01.01";
     String[] terms2 = {"Z 3", "D 5"};
     String[] privacies2 = { "2019.01.01 D", "2019.11.15 Z", "2019.08.02 D", "2019.07.01 D", "2018.12.28 Z" };
 
-    int[] result = solution.solution( today2, terms2, privacies2 );
+    int[] result = solution.solution( today1, terms1, privacies1 );
 
-    for( int i : result ) {
-      System.out.print( i + " " );
-    }
+//    for( int i : result ) {
+//      System.out.print( i + " " );
+//    }
   }
 }
