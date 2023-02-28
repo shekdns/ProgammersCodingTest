@@ -4,7 +4,8 @@ import java.util.*;
 
 //할인 행사
 public class DiscountEvent {
-
+//  문제를 읽어보면 10일동안 할인 적용시에 원하는 물품을 구입할 수 있는 날의 개수를 구하라고 했습니다.
+//  최소 일자가 아니라, 가능한 날의 개수입니다!
   public static class Solution {
     public int solution( String[] want, int[] number, String[] discount ) {
       int answer = 0;
@@ -12,16 +13,16 @@ public class DiscountEvent {
       HashMap<String, Integer> map = new HashMap<>();
       LinkedList<String> list = new LinkedList<>( Arrays.asList( discount ) );
 
-      int sum = 0;
       for( int i = 0; i < want.length; i++ ) {
-        sum += number[i];
         map.put( want[i], number[i] );
       }
 
-      for( int i = 0; i < list.size(); i++ ) {
+      int size = list.size() - 9;
+
+      for( int i = 0; i < size; i++ ) {
         HashMap<String,Integer> cloneMap = (HashMap<String, Integer>) map.clone();
-        int temp = sum;
-        int count = list.size() > 10 ? 10 : list.size();
+        int temp = 10;
+        int count = list.size() >= 10 ? 10 : list.size();
 
         for( int j = 0; j < count; j++ ) {
           if( cloneMap.containsKey( list.get( j ) ) ) {
@@ -37,7 +38,7 @@ public class DiscountEvent {
             break;
           }
         }
-
+        System.out.println( cloneMap );
         if( flag == true ) {
           answer++;
         }
@@ -58,7 +59,7 @@ public class DiscountEvent {
     int[] number2  = { 10 };
     String[] discount2 = { "banana", "banana", "banana", "banana", "banana", "banana", "banana", "banana", "banana", "banana" };
 
-    int result = solution.solution( want2, number2, discount2 );
+    int result = solution.solution( want1, number1, discount1 );
 
     System.out.println( "RESULT = " + result );
   }
