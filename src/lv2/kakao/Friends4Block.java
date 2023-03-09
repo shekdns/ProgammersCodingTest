@@ -15,7 +15,7 @@ public class Friends4Block {
         for( int j = 0; j < n; j++ ) {
           Character ch = board[i].charAt( j );
           array[i][j]  = String.valueOf( ch );
-          visit[i][j]  = "X";
+          visit[i][j]  = "@";
         }
       }
 
@@ -24,11 +24,11 @@ public class Friends4Block {
 
         for( int x = 0; x < m - 1; x++ ) {
           for( int y = 0; y < n - 1; y++ ) {
-            if( array[x][y].equals( array[x][y+1] ) && array[x][y].equals( array[x+1][y] ) && array[x][y].equals( array[x+1][y+1] ) && !array[x][y].equals( "O" ) ) {
-              visit[x][y]     = "O";
-              visit[x][y+1]   = "O";
-              visit[x+1][y]   = "O";
-              visit[x+1][y+1] = "O";
+            if( array[x][y].equals( array[x][y+1] ) && array[x][y].equals( array[x+1][y] ) && array[x][y].equals( array[x+1][y+1] ) && !array[x][y].equals( "#" ) ) {
+              visit[x][y]     = "#";
+              visit[x][y+1]   = "#";
+              visit[x+1][y]   = "#";
+              visit[x+1][y+1] = "#";
 
               flag = true;
             }
@@ -37,10 +37,10 @@ public class Friends4Block {
         System.out.println( "FLAG = " + flag );
         for( int x = 0; x < m; x++ ) {
           for( int y = 0; y < n; y++ ) {
-            if( visit[x][y].equals( "O" ) ) {
+            if( visit[x][y].equals( "#" ) ) {
               answer++;
-              array[x][y] = "O";
-              visit[x][y] = "X";
+              array[x][y] = "#";
+              visit[x][y] = "@";
             }
           }
         }
@@ -48,9 +48,9 @@ public class Friends4Block {
         for( int y = 0; y < n; y++ ) {
           ArrayList<String> temp = new ArrayList<>();
           for( int x = m - 1; x >= 0; x-- ) {
-            if( !array[x][y].equals( "O" ) ) {
+            if( !array[x][y].equals( "#" ) ) {
               temp.add( array[x][y] );
-              array[x][y] = "O";
+              array[x][y] = "#";
             }
           }
 
