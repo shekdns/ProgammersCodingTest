@@ -3,22 +3,17 @@ package lv2;
 public class Multiplication {
   public static class Solution {
     public int[][] solution( int arr1[][], int[][] arr2 ) {
-      int[][] answer = new int[arr1.length][arr1[0].length];
+      int[][] answer = new int[arr1.length][arr2[0].length];
 
-      int a1_row = arr1.length;
-      int a2_row = arr2.length;
-      int a2_col = arr2[0].length;
-
-      for( int i = 0; i < arr2[i].length; i++ ) {
+      for( int i = 0; i < arr2[0].length; i++ ) {
         int z = 0;
-        for( int j = 0; j < a2_row; j++ ) {
-          for( int k = 0; k < a1_row; k++ ) {
+        for( int j = 0; j < arr2.length; j++ ) {
+          for( int k = 0; k < arr1.length; k++ ) {
             answer[k][i] += ( arr1[k][z] * arr2[j][i] );
           }
           z++;
         }
       }
-
       return answer;
     }
   }
@@ -28,9 +23,11 @@ public class Multiplication {
     int[][] arr1 = { {1,4}, {3,2}, {4,1} };
     int[][] arr2 = { {3,3}, {3,3} };
     int[][] arr3 = { {2,3,2}, {4,2,4}, {3,1,4} };
-    int[][] arr4 = { {5,4,3}, {2,4,1}, {3,1,1} };
+    int[][] arr4 = { {5,4} };
+    int[][] arr5 = { {1,2,3,4}, {1,2,3,4} };
+    int[][] arr6 = { {1,2}, {1,2}, {1,2}, {1,2} };
 
-    int[][] result = solution.solution( arr3, arr4 );
+    int[][] result = solution.solution( arr5, arr6 );
 
     for( int i = 0; i < result.length; i++ ) {
       for( int j = 0; j < result[i].length; j++ ) {
