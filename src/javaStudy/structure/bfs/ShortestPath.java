@@ -41,6 +41,7 @@ public class ShortestPath {
         int nc = curr.col + D[i][1];
 
         if( nr < 0 || nr > N-1 || nc < 0 || nc > N-1 ) {
+          System.out.println( "WALL" );
           continue;
         }
         if( visited[nr][nc] == true ) {
@@ -48,6 +49,7 @@ public class ShortestPath {
           continue;
         }
         if( Board[nr][nc] == 1 ) {
+          System.out.println( "WALL" );
           continue;
         }
         visited[nr][nc] = true;
