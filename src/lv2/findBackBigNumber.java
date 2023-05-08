@@ -9,8 +9,8 @@ public class findBackBigNumber {
   public static class Solution {
     public int[] solution( int[] numbers ) {
       int[] answer = new int[numbers.length];
-      //ArrayList<Integer> list = new ArrayList<>();
-//      int max = Arrays.stream( numbers ).max().getAsInt();
+      ArrayList<Integer> list = new ArrayList<>();
+      //int max = Arrays.stream( numbers ).max().getAsInt();
 //      for( int i = 0; i < numbers.length; i++ ) {
 //        if( i == numbers.length - 1 || numbers[i] >= max ) {
 //          answer[i] = -1;
@@ -29,52 +29,26 @@ public class findBackBigNumber {
 //          }
 //        }
 //      }
-      //answer = list.stream().mapToInt( Integer::intValue ).toArray();
-      ArrayList<Integer> list = new ArrayList<>();
-      Stack<Integer> stack = new Stack<>();
-//      for( int i = numbers.length - 1; i >= 0; i-- ) {
-//        stack.push( numbers[i] );
-//      }
-      //stack.push( numbers[0] );
-      for( int i = 0; i < numbers.length; i++ ) {
-        if( i == 0 ) {
-          stack.push( numbers[i] );
-          continue;
-        }
-        while( !stack.isEmpty() ) {
-          int peek = stack.peek();
-          if( peek < numbers[i] ) {
-            stack.pop();
 
+      Stack<Integer> stack = new Stack<>();
+      for( int i = numbers.length - 1; i >= 0; i-- ) {
+        System.out.println( "NUM = " + numbers[i] );
+        while( !stack.isEmpty() ) {
+          if( stack.peek() > numbers[i] ) {
+            answer[i] = stack.peek();
+            System.out.println( "I = " + i + "  A = " + answer[i] );
+            break;
+          } else {
+            stack.pop();
           }
         }
+        if( stack.isEmpty() ) {
+          answer[i] = - 1;
+        }
+        stack.push( numbers[i] );
       }
+      // 2 3 3 5  -> 3 5 5 -1
 
-//      while( !stack.isEmpty() ) {
-//        int peek = stack.peek();
-//        boolean flag = false;
-//        for( int j = i; j < numbers.length; j++ ) {
-//          if( peek < numbers[j] ) {
-//            //list.add( numbers[j] );
-//            answer[count] = numbers[j];
-//            if( i < numbers.length - 1 ) {
-//              i++;
-//            }
-//            stack.pop();
-//            flag = true;
-//            break;
-//          }
-//        }
-//        if( flag == false ) {
-//          //list.add( -1 );
-//          answer[count] = -1;
-//          stack.pop();
-//          if( i < numbers.length - 1 ) {
-//            i++;
-//          }
-//        }
-//        count++;
-//      }
 
       //answer = list.stream().mapToInt( Integer::intValue ).toArray();
 
@@ -86,6 +60,7 @@ public class findBackBigNumber {
     Solution solution = new Solution();
     int[] numbers1 = { 2, 3, 3, 5 };
     int[] numbers2 = { 9, 1, 5, 3, 6, 2 };
+    int[] numbers3 = { 10, 1, 10, 2, 10, 3, 10, 10, 10, 11, 11, 11, 12 };
 
     int[] result = solution.solution( numbers1 );
     for( int i : result ) {
