@@ -1,9 +1,31 @@
 package lv2.kakao;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+
 //방금그곡
 public class TheSong {
   public static class Solution{
+    public class Result {
+      String title;
+      int time;
+      int rnum;
+
+      Result( String title, int time, int rnum ) {
+        this.title = title;
+        this.time  = time;
+        this.rnum  = rnum;
+      }
+      public String getTitle() {
+        return title;
+      }
+      public int getTime() {
+        return time;
+      }
+      public int getRnum() {
+        return rnum;
+      }
+    }
     public ArrayList<String> changeMelodie( String m  ) {
       ArrayList<String> arrayList = new ArrayList<>();
 
@@ -31,7 +53,8 @@ public class TheSong {
       //CC#BCC#BCC#BCC#B  list.stream().toArray(String[]::new);
 
       ArrayList<String> arrayList = changeMelodie( m );
-
+      ArrayList<Result> resultList = new ArrayList<>();
+      int c = 0;
       boolean flag = false;
       for( int i = 0; i < musicinfos.length; i++ ) {
         String[] split = musicinfos[i].split( "," );
@@ -39,7 +62,13 @@ public class TheSong {
         String endTime   = split[1].replace( ":", "" );
         String title     = split[2];
         String melodie   = split[3];
-        int time = Integer.parseInt( endTime ) - Integer.parseInt( startTime );
+        if( Integer.parseInt( endTime ) > 2400 ) {
+          endTime = "2400";
+        }
+        int inTime  = ( Integer.parseInt( startTime.substring( 0, 2 ) ) * 60 ) + Integer.parseInt( startTime.substring( 2, 4 ) );
+        int outTime = ( Integer.parseInt( endTime.substring( 0, 2 ) ) * 60 ) + Integer.parseInt( endTime.substring( 2, 4 ) );
+        int time = outTime - inTime;
+
         ArrayList<String> list = new ArrayList<String>();
         list = changeMelodie( melodie );
 
@@ -47,7 +76,7 @@ public class TheSong {
         int check = 0;
         int listCount = 0;
         while( true ) {
-          if( check == time - 1 ) {
+          if( check == time ) {
             break;
           }
           if( count == arrayList.size() ) {
@@ -65,15 +94,18 @@ public class TheSong {
           listCount++;
           check++;
         }
-
         if( flag == true ) {
-          answer = title;
-          break;
+          Result result = new Result( title, time, c );
+          resultList.add( result );
         }
       }
-
       if( flag == false ) {
         answer = "None";
+      } else {
+        if (resultList.size() >= 2) {
+          resultList.sort( Comparator.comparing(Result::getTime).reversed().thenComparing(Result::getRnum) );
+        }
+        answer = resultList.get(0).getTitle();
       }
 
       return answer;
@@ -87,11 +119,9 @@ public class TheSong {
     String[] musicinfos = { "12:00,12:14,HELLO,CDEFGAB", "13:00,13:05,WORLD,ABCDEF" };
     String[] musicinfos2 = { "03:00,03:30,FOO,CC#B", "04:00,04:08,BAR,CC#BCC#BCC#B" };
     String[] musicinfos3 = { "12:00,12:14,HELLO,C#DEFGAB", "13:00,13:05,WORLD,ABCDEF" };
+    String[] musicinfos4 = { "12:00,12:14,HELLO,ABCDEF", "12:00,12:15,WORLD,ABCDEF" };
     Solution solution = new Solution();
 
-    /*
-
-     */
-    System.out.println( "RESULT = " + solution.solution( m3, musicinfos3 ) );
+    System.out.println( "RESULT = " + solution.solution( m3, musicinfos4 ) );
   }
 }
