@@ -62,11 +62,13 @@ public class TheSong {
         String endTime   = split[1].replace( ":", "" );
         String title     = split[2];
         String melodie   = split[3];
+        int inTime  = 0;
+        int outTime = 0;
         if( Integer.parseInt( endTime ) > 2400 ) {
           endTime = "2400";
         }
-        int inTime  = ( Integer.parseInt( startTime.substring( 0, 2 ) ) * 60 ) + Integer.parseInt( startTime.substring( 2, 4 ) );
-        int outTime = ( Integer.parseInt( endTime.substring( 0, 2 ) ) * 60 ) + Integer.parseInt( endTime.substring( 2, 4 ) );
+        inTime  = startTime.length() > 3 ? ( Integer.parseInt( startTime.substring( 0, 2 ) ) * 60 ) + Integer.parseInt( startTime.substring( 2, 4 ) ) : ( Integer.parseInt( startTime.substring( 0, 1 ) ) * 60 ) + Integer.parseInt( startTime.substring( 1, 3 ) );
+        outTime = endTime.length() > 3 ? (Integer.parseInt(endTime.substring(0, 2)) * 60) + Integer.parseInt(endTime.substring(2, 4)) : (Integer.parseInt(endTime.substring(0, 1)) * 60) + Integer.parseInt(endTime.substring(1, 3));
         int time = outTime - inTime;
 
         ArrayList<String> list = new ArrayList<String>();
@@ -76,15 +78,13 @@ public class TheSong {
         int check = 0;
         int listCount = 0;
         while( true ) {
+          System.out.println( list.get( listCount ) + " || " + arrayList.get( count ) );
           if( check == time ) {
             break;
           }
           if( count == arrayList.size() ) {
             flag = true;
             break;
-          }
-          if( listCount == list.size() ) {
-            listCount = 0;
           }
           if( list.get( listCount ).equals( arrayList.get( count ) ) ) {
             count++;
@@ -93,6 +93,9 @@ public class TheSong {
           }
           listCount++;
           check++;
+          if( listCount == list.size() ) {
+            listCount = 0;
+          }
         }
         if( flag == true ) {
           Result result = new Result( title, time, c );
@@ -116,12 +119,13 @@ public class TheSong {
     String m  = "ABCDEFG";
     String m2 = "CC#BCC#BCC#BCC#B";
     String m3 = "ABC";
+    String m4 = "DF";
     String[] musicinfos = { "12:00,12:14,HELLO,CDEFGAB", "13:00,13:05,WORLD,ABCDEF" };
     String[] musicinfos2 = { "03:00,03:30,FOO,CC#B", "04:00,04:08,BAR,CC#BCC#BCC#B" };
     String[] musicinfos3 = { "12:00,12:14,HELLO,C#DEFGAB", "13:00,13:05,WORLD,ABCDEF" };
-    String[] musicinfos4 = { "12:00,12:14,HELLO,ABCDEF", "12:00,12:15,WORLD,ABCDEF" };
+    String[] musicinfos4 = { "6:20,6:50,TEST,DDF" };
     Solution solution = new Solution();
 
-    System.out.println( "RESULT = " + solution.solution( m3, musicinfos4 ) );
+    System.out.println( "RESULT = " + solution.solution( m4, musicinfos4 ) );
   }
 }
