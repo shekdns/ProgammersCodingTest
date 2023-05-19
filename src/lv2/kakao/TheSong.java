@@ -6,26 +6,6 @@ import java.util.Comparator;
 //방금그곡
 public class TheSong {
   public static class Solution{
-    public class Result {
-      String title;
-      int time;
-      int rnum;
-
-      Result( String title, int time, int rnum ) {
-        this.title = title;
-        this.time  = time;
-        this.rnum  = rnum;
-      }
-      public String getTitle() {
-        return title;
-      }
-      public int getTime() {
-        return time;
-      }
-      public int getRnum() {
-        return rnum;
-      }
-    }
     public ArrayList<String> changeMelodie( String m  ) {
       ArrayList<String> arrayList = new ArrayList<>();
 
@@ -43,19 +23,32 @@ public class TheSong {
       return arrayList;
     }
 
+    public String changeMelodieToString( String m ) {
+      ArrayList<String> arrayList = new ArrayList<>();
+      StringBuilder sb = new StringBuilder();
+      int temp = 0;
+      for( int i = 0; i < m.length(); i++ ) {
+        Character ch = m.charAt( i );
+        if( String.valueOf( ch ).equals( "#" ) ) {
+          temp++;
+          arrayList.set( i - temp, arrayList.get( i - temp ).toLowerCase() );
+        } else {
+          arrayList.add(String.valueOf(ch));
+        }
+      }
+      for( int i = 0; i < arrayList.size(); i++ ) {
+        sb.append( arrayList.get( i ) );
+      }
+
+      return sb.toString();
+    }
+
     public String solution( String m, String[] musicinfos ) {
       String answer = "";
-      /*
-      1. 시작 시간 부터 종료 시간 까지 1분당 멜로디가 1개식 추가
-      2. 시작 멜로디는 melodie 멜로디 부터 시작
-      3. C, C# -> c , D, D# -> d , E, F, F# -> f , G, G# -> g , A, A#  -> a
-      */
-      //CC#BCC#BCC#BCC#B  list.stream().toArray(String[]::new);
 
-      ArrayList<String> arrayList = changeMelodie( m );
-      ArrayList<Result> resultList = new ArrayList<>();
-      int c = 0;
+      String remember = changeMelodieToString( m );
       boolean flag = false;
+
       for( int i = 0; i < musicinfos.length; i++ ) {
         String[] split = musicinfos[i].split( "," );
         String startTime = split[0].replace( ":", "" );
@@ -71,46 +64,39 @@ public class TheSong {
         outTime = endTime.length() > 3 ? (Integer.parseInt(endTime.substring(0, 2)) * 60) + Integer.parseInt(endTime.substring(2, 4)) : (Integer.parseInt(endTime.substring(0, 1)) * 60) + Integer.parseInt(endTime.substring(1, 3));
         int time = outTime - inTime;
 
-        ArrayList<String> list = new ArrayList<String>();
-        list = changeMelodie( melodie );
-
-        int count = 0;
+        ArrayList<String> arrayList = changeMelodie( melodie );
+        String temp = "";
+        int k = 0;
         int check = 0;
-        int listCount = 0;
         while( true ) {
-          System.out.println( list.get( listCount ) + " || " + arrayList.get( count ) );
           if( check == time ) {
             break;
           }
-          if( count == arrayList.size() ) {
-            flag = true;
-            break;
+          if( k == arrayList.size() ) {
+            k = 0;
           }
-          if( list.get( listCount ).equals( arrayList.get( count ) ) ) {
-            count++;
-          } else {
-            count = 0;
-          }
-          listCount++;
+          temp += arrayList.get( k );
+          k++;
           check++;
-          if( listCount == list.size() ) {
-            listCount = 0;
+        }
+        System.out.println( temp + " || " + remember );
+        for( int j = 0; j < temp.length(); j++ ) {
+          if( ( remember.length() + j ) <= temp.length() ) {
+            if( temp.substring( j, remember.length() + j ).equals( remember ) ) {
+              flag = true;
+              break;
+            }
           }
         }
         if( flag == true ) {
-          Result result = new Result( title, time, c );
-          resultList.add( result );
+          answer = title;
+          break;
         }
-      }
-      if( flag == false ) {
-        answer = "None";
-      } else {
-        if (resultList.size() >= 2) {
-          resultList.sort( Comparator.comparing(Result::getTime).reversed().thenComparing(Result::getRnum) );
-        }
-        answer = resultList.get(0).getTitle();
       }
 
+      if( flag == false ) {
+        answer = "(None)";
+      }
       return answer;
     }
   }
@@ -120,12 +106,14 @@ public class TheSong {
     String m2 = "CC#BCC#BCC#BCC#B";
     String m3 = "ABC";
     String m4 = "DF";
+    String m5 = "ABCDEFG";
     String[] musicinfos = { "12:00,12:14,HELLO,CDEFGAB", "13:00,13:05,WORLD,ABCDEF" };
-    String[] musicinfos2 = { "03:00,03:30,FOO,CC#B", "04:00,04:08,BAR,CC#BCC#BCC#B" };
+    String[] musicinfos2 = { "03:00,03:30,FOO,CC#B", "04:00,04:05,BAR,CC#BCC#BCC#B" };
     String[] musicinfos3 = { "12:00,12:14,HELLO,C#DEFGAB", "13:00,13:05,WORLD,ABCDEF" };
     String[] musicinfos4 = { "6:20,6:50,TEST,DDF" };
+    String[] musicinfos5 = { "11:50,12:04,HELLO,CDEFGAB", "12:57,13:11,BYE,CDEFGAB" };
     Solution solution = new Solution();
 
-    System.out.println( "RESULT = " + solution.solution( m4, musicinfos4 ) );
+    System.out.println( "RESULT = " + solution.solution( m3, musicinfos3 ) );
   }
 }
