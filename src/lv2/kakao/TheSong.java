@@ -45,9 +45,10 @@ public class TheSong {
 
     public String solution( String m, String[] musicinfos ) {
       String answer = "";
-
       String remember = changeMelodieToString( m );
       boolean flag = false;
+
+      int max = -1;
 
       for( int i = 0; i < musicinfos.length; i++ ) {
         String[] split = musicinfos[i].split( "," );
@@ -89,19 +90,34 @@ public class TheSong {
           }
         }
         if( flag == true ) {
-          answer = title;
-          break;
+          if( max == -1 ) {
+            max    = time;
+            answer = title;
+          } else {
+            if( max < time ) {
+              max    = time;
+              answer = title;
+            }
+          }
         }
       }
 
       if( flag == false ) {
         answer = "(None)";
       }
+
       return answer;
     }
   }
 
+  //조건이 일치하는 음악이 여러 개일 때에는 라디오에서 재생된 시간이 제일 긴 음악 제목을 반환한다. 재생된 시간도 같을 경우 먼저 입력된 음악 제목을 반환한다.
+//  각 음은 1분에 1개씩 재생된다. 음악은 반드시 처음부터 재생되며 음악 길이보다 재생된 시간이 길 때는 음악이 끊김 없이 처음부터 반복해서 재생된다. 음악 길이보다 재생된 시간이 짧을 때는 처음부터 재생 시간만큼만 재생된다.
+//  음악이 00:00를 넘겨서까지 재생되는 일은 없다.
+
   public static void main(String[] args) {
+    String test = "ABC";
+    String[] testArray = { "03:00,03:05,APPLE,ABCABC", "03:00,03:10,BANANA,ABCABC" };
+
     String m  = "ABCDEFG";
     String m2 = "CC#BCC#BCC#BCC#B";
     String m3 = "ABC";
@@ -114,6 +130,6 @@ public class TheSong {
     String[] musicinfos5 = { "11:50,12:04,HELLO,CDEFGAB", "12:57,13:11,BYE,CDEFGAB" };
     Solution solution = new Solution();
 
-    System.out.println( "RESULT = " + solution.solution( m3, musicinfos3 ) );
+    System.out.println( "RESULT = " + solution.solution( test, testArray ) );
   }
 }
