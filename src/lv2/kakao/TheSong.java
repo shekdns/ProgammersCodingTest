@@ -1,7 +1,6 @@
 package lv2.kakao;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 //방금그곡
 public class TheSong {
@@ -46,14 +45,14 @@ public class TheSong {
     public String solution( String m, String[] musicinfos ) {
       String answer = "";
       String remember = changeMelodieToString( m );
-      boolean flag = false;
-
-      int max = -1;
+      int max = Integer.MIN_VALUE;
 
       for( int i = 0; i < musicinfos.length; i++ ) {
         String[] split = musicinfos[i].split( "," );
         String startTime = split[0].replace( ":", "" );
         String endTime   = split[1].replace( ":", "" );
+        boolean flag = false;
+
         String title     = split[2];
         String melodie   = split[3];
         int inTime  = 0;
@@ -63,7 +62,12 @@ public class TheSong {
         }
         inTime  = startTime.length() > 3 ? ( Integer.parseInt( startTime.substring( 0, 2 ) ) * 60 ) + Integer.parseInt( startTime.substring( 2, 4 ) ) : ( Integer.parseInt( startTime.substring( 0, 1 ) ) * 60 ) + Integer.parseInt( startTime.substring( 1, 3 ) );
         outTime = endTime.length() > 3 ? (Integer.parseInt(endTime.substring(0, 2)) * 60) + Integer.parseInt(endTime.substring(2, 4)) : (Integer.parseInt(endTime.substring(0, 1)) * 60) + Integer.parseInt(endTime.substring(1, 3));
+
+        System.out.println( inTime + " @@@ " + outTime );
+
         int time = outTime - inTime;
+
+        System.out.println( time );
 
         ArrayList<String> arrayList = changeMelodie( melodie );
         String temp = "";
@@ -90,20 +94,11 @@ public class TheSong {
           }
         }
         if( flag == true ) {
-          if( max == -1 ) {
+          if( max < time ) {
             max    = time;
             answer = title;
-          } else {
-            if( max < time ) {
-              max    = time;
-              answer = title;
-            }
           }
         }
-      }
-
-      if( flag == false ) {
-        answer = "(None)";
       }
 
       return answer;
@@ -116,7 +111,7 @@ public class TheSong {
 
   public static void main(String[] args) {
     String test = "ABC";
-    String[] testArray = { "03:00,03:05,APPLE,ABCABC", "03:00,03:10,BANANA,ABCABC" };
+    String[] testArray = { "22:00,22:05,APPLE,ABCABC", "03:00,03:10,BANANA,ABCABC" };
 
     String m  = "ABCDEFG";
     String m2 = "CC#BCC#BCC#BCC#B";
