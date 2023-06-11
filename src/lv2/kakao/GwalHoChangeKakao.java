@@ -1,4 +1,7 @@
 package lv2.kakao;
+
+import java.util.Stack;
+
 //2020 KAKAO BLIND RECRUITMNET 괄호 변환
 public class GwalHoChangeKakao {
 
@@ -12,10 +15,29 @@ public class GwalHoChangeKakao {
 
     public String solution( String p ) {
       String answer = "";
-
+      String u = "";
+      String v = "";
+      int count    = 0;
+      Stack<String> stack = new Stack<>();
       if( p.equals( "" ) ) {
         return answer;
       }
+
+      for( int i = 0; i < p.length(); i++ ) {
+        String temp = String.valueOf( p.charAt( i ) );
+        if( temp.equals( "(" ) ) {
+          count++;
+        } else {
+          count--;
+        }
+
+        u += temp;
+
+        if( count == 0 ) {
+          break;
+        }
+      }
+      v = p.substring( u.length() );
 
 
 
