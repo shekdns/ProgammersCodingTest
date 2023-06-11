@@ -1,28 +1,19 @@
 package lv2.kakao;
 
-import java.util.Stack;
-
 //2020 KAKAO BLIND RECRUITMNET 괄호 변환
 public class GwalHoChangeKakao {
 
   public static class Solution {
 
-    public String changeGwal( String u, String v ) {
-      String temp = "";
-
-      return temp;
-    }
-
-    public String solution( String p ) {
-      String answer = "";
+    public String changeGwal( String p ) {
       String u = "";
       String v = "";
-      int count    = 0;
-      Stack<String> stack = new Stack<>();
-      if( p.equals( "" ) ) {
-        return answer;
-      }
+      int count = 0;
 
+      if( p.equals( "" ) ) {
+        return "";
+      }
+      boolean flag = true;
       for( int i = 0; i < p.length(); i++ ) {
         String temp = String.valueOf( p.charAt( i ) );
         if( temp.equals( "(" ) ) {
@@ -34,12 +25,39 @@ public class GwalHoChangeKakao {
         u += temp;
 
         if( count == 0 ) {
+          if( !temp.equals( ")" ) ) {
+            flag = false;
+          }
           break;
         }
       }
+
       v = p.substring( u.length() );
 
+      if( flag == true ) {
+        return u + changeGwal( v );
+      } else {
+        String t  = u.substring( 1, u.length() - 1 );
+        String tt = "";
 
+        if( t.length() > 0 ) {
+          for( int i = 0; i < t.length(); i++ ) {
+            String s = String.valueOf( t.charAt( i ) );
+            if( s.equals( "(" ) ) {
+              tt += ")";
+            } else {
+              tt += "(";
+            }
+          }
+        }
+        return "(" + changeGwal( v ) + ")" + tt;
+      }
+    }
+
+    public String solution( String p ) {
+      String answer = "";
+
+      answer = changeGwal( p );
 
       return answer;
     }
@@ -68,6 +86,6 @@ public class GwalHoChangeKakao {
     String p2 = ")(";   // ()
     String p3 = "()))((()"; // ()(())()
 
-    System.out.println( solution.solution( p1 ) );
+    System.out.println( solution.solution( p3 ) );
   }
 }
