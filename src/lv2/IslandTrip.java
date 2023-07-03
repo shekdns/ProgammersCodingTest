@@ -1,19 +1,54 @@
 package lv2;
+
+import java.util.ArrayList;
+import java.util.Stack;
+
 //무인드 여행
 public class IslandTrip {
   public static class Solution {
     public static int[][] distance = { {-1,0}, {1,0}, {0,-1}, {0,1} };
     static String[][] Map = {};
 
-    public int[] dfs( int[] answer ) {
+    static class Point {
+      int row;
+      int col;
 
-      return answer;
+      Point( int r, int c ) {
+        this.row = r;
+        this.col = c;
+      }
+    }
+
+    public int[] dfs( int rowSize, int colSize ) {
+      boolean[][] visited = new boolean[rowSize][colSize];
+      ArrayList<Integer> arrayList = new ArrayList<>();
+      int[] returnArray = {};
+      Stack<Point> stack = new Stack<>();
+      stack.push( new Point( 0, 0 ) );
+
+      while( !stack.empty() ) {
+        Point curr = stack.pop();
+        if( visited[curr.row][curr.col] == true ) {
+          continue;
+        }
+        if( Map[curr.row][curr.col].equals( "X" ) ) {
+          continue;
+        }
+        visited[curr.row][curr.col] = true;
+
+
+      }
+
+      return returnArray;
     }
 
     public int[] solution(String[] maps) {
       int[] answer = {};
 
-      Map = new String[maps.length][maps[0].length()];
+      int rowSize = maps.length;
+      int colSize = maps[0].length();
+
+      Map = new String[rowSize][colSize];
 
       for( int i = 0; i < maps.length; i++ ) {
         String temp = maps[i];
@@ -23,7 +58,7 @@ public class IslandTrip {
         }
       }
 
-
+      answer = dfs( rowSize, colSize );
 
       return answer;
     }
