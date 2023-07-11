@@ -1,6 +1,5 @@
 package lv2;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -14,23 +13,25 @@ public class NumbericalSum {
 
       HashSet<Integer> hashSet = new HashSet<>();
       List<Integer> list = Arrays.stream( elements ).boxed().collect(Collectors.toList());
-      int t = list.remove(0 );
-      System.out.println( t );
-      System.out.println( list );
-      list.add( list.size(), t );
-      System.out.println( list );
-//      int i = 0;
-//      while( true ) {
-//        if( i == elements.length - 1 ) {
-//          break;
-//        }
-//        for( int j = 0; j < elements.length; j++ ) {
-//          int sum = 0;
-//          for( int k = 0; k < i + 1; k++ ) {
-//
-//          }
-//        }
-//      }
+      int i = 0;
+      while( true ) {
+        if( i == elements.length ) {
+          break;
+        }
+        for( int j = 0; j < elements.length; j++ ) {
+          int sum = 0;
+          for( int k = 0; k < i + 1; k++ ) {
+            sum += list.get(k);
+          }
+          hashSet.add( sum );
+          int t = list.remove(0 );
+          list.add( list.size(), t );
+        }
+        i++;
+      }
+
+      System.out.println( "HASHSET = " + hashSet );
+      answer = hashSet.size();
 
       return answer;
     }
