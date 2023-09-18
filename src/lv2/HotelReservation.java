@@ -15,23 +15,41 @@ public class HotelReservation {
       Date date = new Date();
       Calendar cal = Calendar.getInstance();
 
+//      for( int i = 0; i < book_time.length; i++ ) {
+//        HashMap<String, Integer> map = new HashMap<>();
+//        String st = book_time[i][0];
+//        String et = book_time[i][1];
+//
+//        date = sdf.parse( et );
+//        cal.setTime( date );
+//        cal.add( Calendar.MINUTE, 10 );
+//        String parseEt = sdf.format( cal.getTime() );
+//
+//        map.put( "start", Integer.parseInt( st.replace( ":", "" ) ) );
+//        map.put( "end", Integer.parseInt( parseEt.replace( ":", "" ) ) );
+//
+//        list.add( map );
+//      }
+
       for( int i = 0; i < book_time.length; i++ ) {
         HashMap<String, Integer> map = new HashMap<>();
         String st = book_time[i][0];
         String et = book_time[i][1];
 
-        date = sdf.parse( et );
-        cal.setTime( date );
-        cal.add( Calendar.MINUTE, 10 );
-        String parseEt = sdf.format( cal.getTime() );
+        String[] split1 = st.split( ":" );
+        String[] split2 = et.split( ":" );
 
-        map.put( "start", Integer.parseInt( st.replace( ":", "" ) ) );
-        map.put( "end", Integer.parseInt( parseEt.replace( ":", "" ) ) );
+        int start = ( Integer.parseInt( split1[0] ) * 60 ) + Integer.parseInt( split1[1]);
+        int end   = ( Integer.parseInt( split2[0] ) * 60 ) + ( Integer.parseInt( split2[1] ) + 10 );
 
-        list.add( map );
+        map.put("start", start );
+        map.put("end", end );
+
+        list.add(map);
       }
-      list.sort( Comparator.comparing( ( Map<String, Integer> map ) -> map.get( "start" ) )  );
       System.out.println( "LIST = " + list );
+      list.sort( Comparator.comparing( ( Map<String, Integer> map ) -> map.get( "start" ) )  );
+
       int count = 1;
       Map<Integer, Integer> room = new HashMap<>();
       for( Map<String, Integer> map : list ) {
@@ -65,6 +83,7 @@ public class HotelReservation {
     String[][] book_time1 = { {"15:00", "17:00"}, {"16:40", "18:20"}, {"14:20", "15:20"}, {"14:10", "19:20"}, {"18:20", "21:20"} };
     String[][] book_time2 = { {"09:10", "10:10"}, {"10:20", "12:50"} };
     String[][] book_time3 = { {"10:20", "12:30"}, {"10:20", "12:30"}, {"10:20", "12:30"} };
+    String[][] book_time4 = { {"05:57", "06:02"}, {"04:00", "06:59"}, {"03:56", "07:57"}, {"06:12", "08:55"}, {"23:00", "23:59"} };
 
     System.out.println( solution.solution( book_time3 ) );
   }
