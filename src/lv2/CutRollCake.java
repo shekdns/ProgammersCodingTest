@@ -1,6 +1,8 @@
 package lv2;
 
-import java.util.HashSet;
+import java.util.*;
+import java.util.stream.Collectors;
+
 //롤케이크 자르기
 /*
 * 철수행님이 먼저 토핑들을 전부 다 차지해버린다.
@@ -19,22 +21,26 @@ public class CutRollCake {
     public int solution( int[] topping ) {
       int answer = 0;
 
-      int position = 1;
-      for( int i = 0; i < topping.length; i++ ) {
-        HashSet<Integer> leftSet  = new HashSet<>();
-        HashSet<Integer> rightSet = new HashSet<>();
+      //List<Integer> broList = Arrays.stream( topping ).boxed().collect(Collectors.toList());
+      HashSet<Integer> set  = new HashSet<>();
+      HashMap<Integer, Integer> map = new HashMap<>();
 
-        for( int j = 0; j < position; j++ ) {
-          leftSet.add( topping[j] );
+      for( int i = 0; i < topping.length; i++ ) {
+        map.put( topping[i], map.getOrDefault( topping[i], 0 ) + 1 );
+      }
+
+      for( int i = 0; i < topping.length; i++ ) {
+        set.add( topping[i] );
+        map.put( topping[i], map.getOrDefault( topping[i], 0 ) - 1 );
+
+        if( map.get( topping[i] ) == 0 ) {
+          map.remove( topping[i] );
         }
-        for( int j = position; j < topping.length; j++ ) {
-          rightSet.add( topping[j] );
-        }
-        position++;
-        if( leftSet.size() == rightSet.size() ) {
+        if( map.size() == set.size() ) {
           answer++;
         }
       }
+
       return answer;
     }
   }
