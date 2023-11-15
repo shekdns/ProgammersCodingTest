@@ -1,4 +1,7 @@
 package lv2;
+
+import java.util.Stack;
+
 //큰 수 만들기
 public class MakeMaxValue {
   public static class Solution {
@@ -7,26 +10,56 @@ public class MakeMaxValue {
 
       String front = number.substring( 0, number.length() - k  );
       String back  = number.substring( number.length() - k  );
-      System.out.println( "F = " + front );
-      int postion = 0;
-      int leng = front.length() - k;
-      System.out.println( leng );
-      Character ch = front.charAt( 0 );
-      int max = Integer.parseInt( ch.toString() );
 
-      if( front.length() + 1 <= k ) {
+      int tempMax = Integer.MIN_VALUE;
+      Stack<String> stack = new Stack<>();
 
+      if( front.length() == back.length() ) {
+        for (int i = 0; i < front.length(); i++) {
+          Character ch = front.charAt(i);
+          int temp = Integer.parseInt(ch.toString());
+
+          if (temp > tempMax) {
+            tempMax = temp;
+          }
+        }
+
+        stack.add( String.valueOf( tempMax ) );
+        int limitSize = number.length() - k;
+
+        for( int i = 0; i < back.length(); i++ ) {
+          Character ch = back.charAt( i );
+          int temp = Integer.parseInt( ch.toString() );
+          int bVal = Integer.parseInt( stack.peek() );
+
+          if( i == 0 ) {
+            if( bVal < temp ) {
+              stack.pop();
+              stack.add( String.valueOf( temp ) );
+            } else {
+              stack.add( String.valueOf( temp ) );
+            }
+          } else {
+            if( bVal < temp ) {
+              stack.pop();
+              stack.add( String.valueOf( temp ) );
+            } else {
+              if( stack.size() < limitSize ) {
+                stack.add( String.valueOf( temp ) );
+              }
+            }
+          }
+        }
+      } else {
+        System.out.println( "F = " + front + " || B = " + back );
       }
-//      for( int i = 1; i < front.length(); i++ ) {
-//        postion = i;
-//        ch = front.charAt( i );
-//        int t = Integer.parseInt( ch.toString( ) );
-//        if(  )
-//
-//      }
-      //417725
-      String d = "417725";
-      System.out.println( d.substring( d.length() - ( d.length() - 5 ) ) );
+
+      StringBuilder sb = new StringBuilder();
+      for( String s : stack ) {
+        sb.append( s );
+      }
+
+      answer = sb.toString();
 
       return answer;
     }
