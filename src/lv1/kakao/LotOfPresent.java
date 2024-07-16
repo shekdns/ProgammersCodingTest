@@ -1,9 +1,6 @@
 package lv1.kakao;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //가장 많이 받은 선물
 public class LotOfPresent {
@@ -12,6 +9,7 @@ public class LotOfPresent {
       int answer = 0;
       HashMap<String, HashMap<String, Integer>> toMap = new HashMap<>();
       HashMap<String, Integer> pMap = new HashMap<>();
+      HashMap<String, Integer> sMap = new HashMap<>();
 
       for( String name : friends ) {
         HashMap<String, Integer> innerMap = new HashMap<>();
@@ -23,33 +21,41 @@ public class LotOfPresent {
             innerMap.put( from, innerMap.getOrDefault( from, 0 ) + 1 );
           }
           pMap.put( from, pMap.getOrDefault( from, 0 ) + 1 );
+          sMap.put( to, sMap.getOrDefault( to, 0 ) + 1 );
         }
         toMap.put( name, innerMap );
       }
-      System.out.println( pMap );
-      System.out.println( toMap );
 
-      for( Map.Entry<String, HashMap<String,Integer>> entry : toMap.entrySet() ) {
-        String mainKey = entry.getKey();
-        HashMap<String, Integer> mainValue = entry.getValue();
-        int jisu = pMap.get( mainKey ) == null ? 0 : pMap.get( mainKey ) / friends.length;
+      ArrayList<Integer> list = new ArrayList<>();
+      for( String name : friends ) {
+        int toPresent = sMap.get( name ) == null ? 0 : sMap.get( name )/ friends.length;
+        int frPresent = pMap.get( name ) == null ? 0 : pMap.get( name )/ friends.length;
+        int diff = toPresent - frPresent;
 
-        for( Map.Entry<String, Integer> e : mainValue.entrySet() ) {
-          String k = e.getKey();
-          int    v = e.getValue();
-          for (Map.Entry<String, HashMap<String, Integer>> entry2 : toMap.entrySet()) {
-            String mainKey2 = entry2.getKey();
-            HashMap<String, Integer> mainValue2 = entry2.getValue();
-            int jisu2 = pMap.get(mainKey2) == null ? 0 : pMap.get(mainKey2) / friends.length;
-            if ( mainKey.equals( mainKey2 ) ) {
-              continue;
+        int total = 0;
+        for( Map.Entry<String, HashMap<String,Integer>> entry : toMap.entrySet() ) {
+          String eName = entry.getKey(); // ryan
+          HashMap<String, Integer> eMap = entry.getValue();
+          int eMapValue = eMap.get( name ) == null ? 0 : eMap.get( name ); // 3
+          int tMapValue = toMap.get( name ).get( eName ) == null ? 0 : toMap.get( name ).get( eName );
+
+          if( !eName.equals( name ) ) {
+            if( tMapValue > eMapValue ) {
+              total++;
+            } else if( tMapValue == eMapValue ) {
+              int eToPresent = sMap.get( eName ) == null ? 0 : sMap.get( eName ) / friends.length;
+              int eFrPresent = pMap.get( eName ) == null ? 0 : pMap.get( eName ) / friends.length;
+              int eDiff = eToPresent - eFrPresent;
+
+              if( diff > eDiff ) {
+                total++;
+              }
             }
-
           }
         }
-
+        list.add( total );
       }
-
+      answer = Collections.max( list );
       return answer;
     }
   }
