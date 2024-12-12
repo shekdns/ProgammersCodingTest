@@ -6,6 +6,46 @@ public class TwoAnotherBeat {
     //비트가 1 또는 2 바로 나오면 Break
     public long[] solution( long[] numbers ) {
       long[] answer = new long[numbers.length];
+      int idx=0;
+      for(long num:numbers) {
+        for(long i=1;;i*=2) {
+          System.out.println( i );
+          if((num&i)==0) { // (1)
+            num = num + i; // (2)
+            System.out.println( " 1 = " + num );
+            num = num - (i/2); // (3)
+            System.out.println( " 2 = " + num );
+            break;
+          }
+        }
+        answer[idx++]=num;
+      }
+
+      return answer;
+    }
+
+    static String bytesToBinaryString(Byte b) {
+      StringBuilder builder = new StringBuilder();
+      for (int i = 0; i < 8; i++) {
+        builder.append(((0x80 >>> i) & b) == 0 ? '0' : '1');
+      }
+
+      return builder.toString();
+    }
+  }
+
+  public static void main(String[] args) {
+    Solution solution = new Solution();
+    long[] param = { 2, 38 };
+    long[] result = solution.solution( param );
+
+    for( long l : result ) {
+      System.out.print( l + " " );
+    }
+  }
+}
+/*
+* long[] answer = new long[numbers.length];
 
       for( int i = 0; i < numbers.length; i++ ) {
         String byteString = bytesToBinaryString((byte) numbers[i]);
@@ -33,25 +73,9 @@ public class TwoAnotherBeat {
       }
 
       return answer;
-    }
-
-    static String bytesToBinaryString(Byte b) {
-      StringBuilder builder = new StringBuilder();
-      for (int i = 0; i < 8; i++) {
-        builder.append(((0x80 >>> i) & b) == 0 ? '0' : '1');
-      }
-
-      return builder.toString();
-    }
-  }
-
-  public static void main(String[] args) {
-    Solution solution = new Solution();
-    long[] param = { 2, 38 };
-    long[] result = solution.solution( param );
-
-    for( long l : result ) {
-      System.out.print( l + " " );
-    }
-  }
-}
+*
+*
+*
+*
+*
+* */
