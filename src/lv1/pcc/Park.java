@@ -1,55 +1,47 @@
 package lv1.pcc;
 
+import java.util.HashSet;
+
 public class Park {
   public static class Solution {
     public int solution(int[] mats, String[][] park) {
-      int answer = 0;
-
-      int startRow = 0;
-      int startCol = 0;
-      int count = 0;
-
-      int maxCol = park.length;
-      int maxRow = park[0].length;
-      int tempCol = 0;
-
-      for( int i : mats ) {  //i = 5
-        for( int j = startCol; j < park.length; j++ ) {
-          j = startCol;
-          for( int k = startRow; k < park[j].length; k++ ) {
-            int a = maxRow - startRow;
-            if( a < i ) {
-              startCol++;
-              tempCol = startCol;
-              startRow = 0;
-              break;
-            }
-            if( park[j][k].equals( "-1" ) ) {
-              count++;
-
-              if( count % i == 0 ) {
-                startCol++;
-                tempCol = startCol;
-                break;
-              }
-            } else {
-              startRow++;
-              count = 0;
-              startCol = tempCol;
-              break;
-            }
-          }
-          int c = maxCol - startCol;
-          if( c < i ) {
-            break;
-          }
-          if( count > 0 ) {
-            if( count % i == 0 ) {
-              answer = i;
-            }
+      int[][]dp = new int[park.length][park[0].length];
+      HashSet<Integer> numList = new HashSet<>();
+      for( int i = 0; i < park.length; i++ ) {
+        for( int j = 0; j < park[0].length; j++ ) {
+          if( park[i][j].equals("-1") ) {
+            dp[i][j] = 1;
+          } else {
+            dp[i][j] = 0;
           }
         }
       }
+      for( int i = 1; i < dp.length; i++ ) {
+        for( int j = 1; j < dp[0].length; j++ ) {
+          if( dp[i][j] == 0 ) {
+            continue;
+          }
+
+          System.out.println( "dp[" + i + "][" + j + "] = " + dp[i][j] );
+          System.out.println( "dp[" + (i-1) + "][" + (j-1) + "] = " + dp[i-1][j-1] );
+          System.out.println( "dp[" + (i) + "][" + (j-1) + "] = " + dp[i][j-1] );
+          System.out.println( "dp[" + (i-1) + "][" + (j) + "] = " + dp[i-1][j] );
+          dp[i][j] = Math.min(dp[i-1][j-1],Math.min(dp[i][j-1],dp[i-1][j])) + 1;
+          int a = dp[i][j];
+          System.out.println( "A = " + a );
+          System.out.println( "=====================================================" );
+          numList.add(dp[i][j]);
+        }
+      }
+
+      int answer = -1;
+      for(int su : mats){
+        if(numList.contains(su)) {
+          answer = Math.max(answer, su);
+        }
+      }
+
+      System.out.println( "MAX = " + answer );
 
       return answer;
     }
