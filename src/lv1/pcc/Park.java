@@ -26,6 +26,7 @@ public class Park {
           System.out.println( "dp[" + (i-1) + "][" + (j-1) + "] = " + dp[i-1][j-1] );
           System.out.println( "dp[" + (i) + "][" + (j-1) + "] = " + dp[i][j-1] );
           System.out.println( "dp[" + (i-1) + "][" + (j) + "] = " + dp[i-1][j] );
+          System.out.println( "MIN = " + Math.min(dp[i-1][j-1],Math.min(dp[i][j-1],dp[i-1][j])) );
           dp[i][j] = Math.min(dp[i-1][j-1],Math.min(dp[i][j-1],dp[i-1][j])) + 1;
           int a = dp[i][j];
           System.out.println( "A = " + a );
@@ -50,8 +51,8 @@ public class Park {
   public static void main(String[] args) {
     Solution solution = new Solution();
     int[] mats   = { 5, 3, 2 };
-    String[][] park = { { "A", "A", "-1", "B", "C", "F", "G", "-1" },
-                        { "A", "A", "-1", "B", "C", "F", "G", "-1" },
+    String[][] park = { { "-1", "A", "-1", "B", "C", "F", "G", "-1" },
+                        { "A", "-1", "-1", "B", "C", "F", "G", "-1" },
                         { "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1" },
                         { "D", "D", "-1", "-1", "-1", "-1", "E", "-1" },
                         {  "D", "D", "-1", "-1", "-1", "-1", "-1", "F" },
