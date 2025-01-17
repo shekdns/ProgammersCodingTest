@@ -1,11 +1,37 @@
 package lv2;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Stack;
 
 //큰 수 만들기
 public class MakeMaxValue {
   public static class Solution {
+
     public String solution( String number, int k ) {
+      String answer = "";
+
+      List<Integer>  list = new ArrayList<>();
+      for( int i = 0; i < number.length(); i++ ) {
+        Character c = number.charAt(i);
+        list.add ( Integer.parseInt( c.toString() ) );
+      }
+
+      Stack<Integer> stack = new Stack<>();
+      stack.push( list.get( 0 ) );
+      int maxLength = number.length() - k - 1;
+      int count = 0;
+
+
+
+
+
+
+      return answer;
+    }
+
+    public String solution_back( String number, int k ) {
       String answer = "";
 
       String front = number.substring( 0, number.length() - k  );
