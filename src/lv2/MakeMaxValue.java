@@ -1,7 +1,6 @@
 package lv2;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
@@ -20,69 +19,39 @@ public class MakeMaxValue {
 
       Stack<Integer> stack = new Stack<>();
       stack.push( list.get( 0 ) );
-      int maxLength = number.length() - k - 1;
-      int count = 0;
 
-
-
-
-
-
-      return answer;
-    }
-
-    public String solution_back( String number, int k ) {
-      String answer = "";
-
-      String front = number.substring( 0, number.length() - k  );
-      String back  = number.substring( number.length() - k  );
-
-      int tempMax = Integer.MIN_VALUE;
-      Stack<String> stack = new Stack<>();
-
-      if( front.length() == back.length() ) {
-        for (int i = 0; i < front.length(); i++) {
-          Character ch = front.charAt(i);
-          int temp = Integer.parseInt(ch.toString());
-
-          if (temp > tempMax) {
-            tempMax = temp;
+      for( int i = 1; i < list.size(); i++ ) {
+        while( true ) {
+          int listVal = list.get( i );
+          if( k == 0 ) {
+            stack.push( listVal );
+            break;
           }
-        }
-
-        stack.add( String.valueOf( tempMax ) );
-        int limitSize = number.length() - k;
-
-        for( int i = 0; i < back.length(); i++ ) {
-          Character ch = back.charAt( i );
-          int temp = Integer.parseInt( ch.toString() );
-          int bVal = Integer.parseInt( stack.peek() );
-
-          if( i == 0 ) {
-            if( bVal < temp ) {
-              stack.pop();
-              stack.add( String.valueOf( temp ) );
-            } else {
-              stack.add( String.valueOf( temp ) );
-            }
+          if( stack.isEmpty() ) {
+            stack.push( list.get( i ) );
+            break;
+          }
+          int temp    = stack.peek();
+          if( temp >= listVal ) {
+            stack.push( listVal );
+            break;
           } else {
-            if( bVal < temp ) {
-              stack.pop();
-              stack.add( String.valueOf( temp ) );
-            } else {
-              if( stack.size() < limitSize ) {
-                stack.add( String.valueOf( temp ) );
-              }
-            }
+            stack.pop();
+            k--;
           }
         }
-      } else {
-        System.out.println( "F = " + front + " || B = " + back );
       }
 
-      StringBuilder sb = new StringBuilder();
-      for( String s : stack ) {
-        sb.append( s );
+      StringBuilder sb =  new StringBuilder();
+      while( !stack.isEmpty() ) {
+        sb.append( stack.pop() );
+      }
+
+      sb.reverse();
+
+      int maxLength = number.length() - k;
+      if( maxLength < sb.toString().length() ) {
+        sb = new StringBuilder( sb.substring(0, maxLength) );
       }
 
       answer = sb.toString();
@@ -95,11 +64,13 @@ public class MakeMaxValue {
     String number1 = "1924";
     String number2 = "1231234";
     String number3 = "4177252841";
+    String number4 = "987654";
 
     int k1 = 2;
     int k2 = 3;
     int k3 = 4;
+    int k4 = 2;
 
-    System.out.println( "RESULT = " + solution.solution( number3, k3 ) );
+    System.out.println( "RESULT = " + solution.solution( number4, k4 ) );
   }
 }
