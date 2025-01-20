@@ -3,11 +3,15 @@ package lv2.kakao;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-
+//2021 KAKAO BLIND RECRUITMENT
+//메뉴 리뉴얼
 public class MenuRenewal {
+  //public static HashMap<String, Integer> staticMap = new HashMap<>();
+
   public static class Solution {
     public String[] solution( String[] orders, int[] course ) {
       String[] answer = {};
+
 
       String[] temp;
       temp = new String[orders.length];
@@ -22,15 +26,13 @@ public class MenuRenewal {
         map.put( i + 1, list );
       }
 
-      System.out.println( map );
-
-//      for( String menu : orders ) {
-//        for( int num : course ) {
-//          if( menu.length() == num ) {
-//
-//          }
-//        }
-//      }
+      for( int i = 0; i < course.length; i++ ) {
+        int count = course[i];
+        for (LinkedList<String> list : map.values()) {
+          int k = 0;
+          StringBuilder sb = new StringBuilder(list.get(k));
+        }
+      }
 
       return answer;
     }
