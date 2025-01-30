@@ -3,34 +3,35 @@ package lv2.kakao;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class MenuRenewal {
   public static class Solution {
+    public static HashMap<String, Integer> dfsMap = null;
+
     public String[] solution( String[] orders, int[] course ) {
       String[] answer = {};
 
       String[] temp;
       temp = new String[orders.length];
       LinkedHashMap<Integer, LinkedList<String>> map = new LinkedHashMap<>();
+      LinkedList<LinkedList<String>> list = new LinkedList<>();
 
       for( int i = 0; i < orders.length; i++ ) {
-        LinkedList<String> list = new LinkedList<>();
+        LinkedList<String> list2 = new LinkedList<>();
         for( int j = 0; j < orders[i].length(); j++ ) {
           Character ch = orders[i].charAt( j );
-          list.add( String.valueOf( ch ) );
+          list2.add( String.valueOf( ch ) );
         }
-        map.put( i + 1, list );
+        list.add( list2 );
       }
 
-      System.out.println( map );
+      Stack<String> stack = new Stack<>();
 
-//      for( String menu : orders ) {
-//        for( int num : course ) {
-//          if( menu.length() == num ) {
-//
-//          }
-//        }
-//      }
+      for( LinkedList<String> innerList : list ) {
+
+      }
+
 
       return answer;
     }
