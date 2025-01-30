@@ -3,35 +3,25 @@ package lv2.kakao;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.Stack;
-
+//2021 KAKAO BLIND RECRUITMENT
+//메뉴 리뉴얼
 public class MenuRenewal {
-  public static class Solution {
-    public static HashMap<String, Integer> dfsMap = null;
+  //public static HashMap<String, Integer> staticMap = new HashMap<>();
 
+  public static class Solution {
     public String[] solution( String[] orders, int[] course ) {
       String[] answer = {};
+
 
       String[] temp;
       temp = new String[orders.length];
       LinkedHashMap<Integer, LinkedList<String>> map = new LinkedHashMap<>();
-      LinkedList<LinkedList<String>> list = new LinkedList<>();
 
-      for( int i = 0; i < orders.length; i++ ) {
-        LinkedList<String> list2 = new LinkedList<>();
-        for( int j = 0; j < orders[i].length(); j++ ) {
-          Character ch = orders[i].charAt( j );
-          list2.add( String.valueOf( ch ) );
-        }
-        list.add( list2 );
-      }
+      for( String order : orders ) {
+        char[] ch = order.toCharArray();
 
-      Stack<String> stack = new Stack<>();
-
-      for( LinkedList<String> innerList : list ) {
 
       }
-
 
       return answer;
     }
